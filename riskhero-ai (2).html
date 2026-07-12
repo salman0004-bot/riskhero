@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RiskHero — AI Governance & Assurance Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --heading: #0c1d37;
+  --blue-rh: #00bcee;
+  --blue-rh2: #0258ff;
+  --light-blue: #dff4fb;
+  --orange: #ff6501;
+  --green: #27ae60;
+  --white: #ffffff;
+  --shadow: rgba(100,44,0,0.07);
+  --accent-bg: rgba(2,88,255,0.10);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{height:100%;scroll-behavior:smooth;}
+body{color:var(--heading);background:#fff;font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.6;min-height:100%;}
+a{text-decoration:none;color:inherit;}
+img{max-width:100%;display:block;}
+
+/* NAV */
+.section-navbar{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:center;}
+.navbar{background:transparent;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:16px 30px;width:100%;position:relative;}
+.navbar-bg{position:absolute;inset:0;background:var(--light-blue);box-shadow:0 15px 50px -10px var(--shadow);z-index:-1;opacity:0;transition:opacity .3s;}
+.grid-navbar{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;width:100%;max-width:1200px;gap:10px;}
+.nav{display:flex;align-items:center;}
+.nav.right{justify-content:flex-end;}
+.logo-text{font-family:'Manrope',sans-serif;font-weight:800;font-size:1.4rem;color:var(--heading);letter-spacing:-.5px;}
+.logo-text span{color:var(--blue-rh2);}
+.nav-menu{display:flex;align-items:center;gap:2px;}
+.nav-link{color:var(--heading);font-size:15px;font-weight:500;padding:12px 13px;transition:color .15s;}
+.nav-link:hover,.nav-link.active{color:var(--blue-rh2);}
+.extra-nav-menu{display:flex;align-items:center;gap:8px;}
+.nav-button{border:2px solid var(--heading);color:var(--heading);background:transparent;border-radius:50px;padding:10px 20px;font-size:15px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .2s,color .2s;display:inline-block;}
+.nav-button:hover{background:var(--heading);color:#fff;}
+
+/* BUTTONS */
+.button{background:var(--heading);color:#fff;border-radius:50px;padding:18px 40px;font-size:16px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;border:none;display:inline-block;transition:background .2s,transform .15s;}
+.button:hover{background:var(--blue-rh2);transform:translateY(-1px);}
+.button.outline{background:transparent;border:2px solid var(--heading);color:var(--heading);padding:16px 38px;}
+.button.outline:hover{background:var(--heading);color:#fff;}
+.button-small{border:2px solid var(--heading);color:var(--heading);background:transparent;border-radius:50px;padding:12px 28px;font-size:14px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;display:inline-block;transition:background .2s,color .2s;margin-top:24px;}
+.button-small:hover{background:var(--heading);color:#fff;}
+
+/* HERO */
+.section-hero{background:var(--light-blue);display:flex;flex-direction:column;justify-content:center;align-items:center;padding:190px 30px 120px;overflow:hidden;}
+.block-hero{text-align:center;display:flex;flex-direction:column;align-items:center;max-width:900px;}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--accent-bg);border:1px solid rgba(2,88,255,.2);color:var(--blue-rh2);font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;padding:6px 16px;border-radius:50px;margin-bottom:28px;}
+.eyebrow-dot{width:6px;height:6px;background:var(--blue-rh2);border-radius:50%;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
+.heading-hero{color:var(--heading);font-family:'Manrope',sans-serif;font-weight:800;font-size:clamp(2.4rem,5vw,3.6rem);line-height:1.1;letter-spacing:-1px;margin-bottom:22px;}
+.text-accent{color:var(--blue-rh2);background:var(--accent-bg);border-radius:8px;padding:0 .25em;}
+.paragraph-hero{font-family:'Lato',sans-serif;font-size:1.1rem;color:rgba(12,29,55,.7);max-width:580px;margin-bottom:36px;line-height:1.75;}
+.hero-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+.hero-cards-row{display:flex;gap:16px;margin-top:60px;flex-wrap:wrap;justify-content:center;}
+.hero-card{background:#fff;border-radius:16px;padding:18px 22px;box-shadow:0 20px 50px -10px rgba(12,29,55,.12);min-width:180px;text-align:left;}
+.hero-card-label{font-size:.68rem;font-weight:700;color:rgba(12,29,55,.4);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px;}
+.hero-card-value{font-family:'Manrope',sans-serif;font-weight:800;font-size:1.5rem;color:var(--heading);}
+.hero-card-value.blue{color:var(--blue-rh2);}
+.hero-card-value.green{color:var(--green);}
+.hero-card-sub{font-size:.72rem;color:rgba(12,29,55,.45);margin-top:3px;}
+.hero-card-bar{height:4px;background:var(--light-blue);border-radius:4px;margin-top:10px;overflow:hidden;}
+.hero-card-bar-fill{height:4px;border-radius:4px;background:var(--blue-rh2);}
+.ai-chip-card{display:flex;align-items:flex-start;gap:10px;background:var(--accent-bg);border:1px solid rgba(2,88,255,.2);border-radius:14px;padding:14px 18px;text-align:left;max-width:320px;}
+.ai-chip-label{background:var(--blue-rh2);color:#fff;font-size:.6rem;font-weight:800;padding:3px 7px;border-radius:4px;white-space:nowrap;margin-top:2px;flex-shrink:0;text-transform:uppercase;letter-spacing:.5px;}
+.ai-chip-text{font-size:.8rem;color:var(--blue-rh2);font-weight:600;line-height:1.5;}
+.partner-strip{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:10px;margin-top:44px;font-size:.75rem;color:rgba(12,29,55,.45);font-weight:600;text-transform:uppercase;letter-spacing:1.5px;}
+.partner-badge{background:rgba(12,29,55,.07);border-radius:50px;padding:5px 14px;font-size:.68rem;letter-spacing:1.5px;}
+
+/* SECTIONS */
+.section{display:flex;flex-direction:column;justify-content:center;align-items:center;padding:85px 30px;}
+.section.is-light{background:var(--light-blue);}
+.content{display:flex;flex-direction:column;justify-content:center;align-items:center;width:100%;max-width:1200px;}
+.block-center{text-align:center;display:flex;flex-direction:column;align-items:center;max-width:720px;margin-bottom:8px;}
+.heading{font-family:'Manrope',sans-serif;font-weight:800;font-size:clamp(1.8rem,3.5vw,2.6rem);color:var(--heading);line-height:1.2;letter-spacing:-.5px;margin-bottom:10px;}
+.heading.white{color:#fff;}
+.paragraph{font-family:'Lato',sans-serif;font-size:1rem;color:rgba(12,29,55,.65);max-width:470px;margin-bottom:30px;line-height:1.75;}
+.paragraph.white{color:rgba(255,255,255,.6);}
+.section-tag{display:inline-block;background:var(--accent-bg);color:var(--blue-rh2);font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;padding:5px 14px;border-radius:50px;margin-bottom:14px;}
+
+/* 4 PILLARS */
+.grid-feature{display:grid;grid-template-columns:repeat(4,1fr);gap:30px;width:100%;margin-top:20px;}
+.feature{display:flex;flex-direction:column;justify-content:flex-start;align-items:center;text-align:center;}
+.icon-feature-bg{background:#fff;box-shadow:0 25px 50px -10px var(--shadow);border-radius:24px;display:flex;flex-direction:column;justify-content:center;align-items:center;width:80px;height:80px;margin-bottom:20px;}
+.icon-feat{width:38px;height:38px;stroke:var(--blue-rh2);fill:none;stroke-width:1.8;}
+.heading-feature{font-family:'Manrope',sans-serif;font-weight:700;font-size:1rem;color:var(--heading);margin-bottom:10px;}
+.paragraph-feature{font-family:'Lato',sans-serif;font-size:.9rem;color:rgba(12,29,55,.65);line-height:1.7;max-width:220px;}
+
+/* STICKY FULL SECTION */
+.section-full{width:100%;}
+.grid-content{display:grid;grid-template-columns:minmax(30px,1fr) minmax(auto,480px) minmax(auto,680px) minmax(30px,1fr);align-items:start;padding:85px 0;}
+.block-sticky{grid-column:2;padding-right:60px;padding-top:30px;}
+.reg-badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;margin-bottom:28px;}
+.reg-badge{background:var(--accent-bg);border:1px solid rgba(2,88,255,.2);color:var(--blue-rh2);font-size:.7rem;font-weight:700;padding:4px 12px;border-radius:50px;}
+.grid-app-screen{grid-column:3;display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:20px 30px 20px 0;}
+.app-card{background:#fff;border-radius:16px;box-shadow:0 20px 50px -10px rgba(12,29,55,.1);padding:18px 20px;border:1px solid rgba(12,29,55,.06);}
+.app-card.full{grid-column:1/-1;}
+.app-card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.app-card-title{font-family:'Manrope',sans-serif;font-weight:700;font-size:.8rem;color:var(--heading);}
+.sdot{width:8px;height:8px;border-radius:50%;}
+.sdot.g{background:#0ab368;} .sdot.o{background:var(--orange);} .sdot.b{background:var(--blue-rh2);}
+.mini-bar-row{margin-bottom:8px;}
+.mini-bar-label{display:flex;justify-content:space-between;font-size:.67rem;color:rgba(12,29,55,.5);margin-bottom:3px;font-weight:600;}
+.mini-bar{height:5px;background:rgba(12,29,55,.07);border-radius:3px;overflow:hidden;}
+.mini-bar-fill{height:5px;border-radius:3px;}
+.score-big{font-family:'Manrope',sans-serif;font-weight:800;font-size:2.2rem;color:var(--heading);line-height:1;}
+.score-lbl{font-size:.7rem;color:rgba(12,29,55,.45);margin-top:4px;}
+.finding-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid rgba(12,29,55,.05);font-size:.78rem;color:var(--heading);}
+.finding-row:last-child{border-bottom:none;}
+.fsev{font-size:.65rem;font-weight:700;padding:2px 8px;border-radius:50px;}
+.fsev.h{background:rgba(255,101,1,.12);color:var(--orange);}
+.fsev.m{background:rgba(2,88,255,.1);color:var(--blue-rh2);}
+.fsev.l{background:rgba(10,179,104,.1);color:#0ab368;}
+
+/* HOW IT WORKS */
+.grid-sequence{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:20px;align-items:start;width:100%;margin-top:20px;}
+.sequence{display:flex;flex-direction:column;align-items:center;text-align:center;}
+.icon-seq-bg{background:#fff;box-shadow:0 25px 50px -10px var(--shadow);border-radius:24px;display:flex;flex-direction:column;justify-content:center;align-items:center;width:90px;height:90px;margin-bottom:20px;position:relative;}
+.num-bg{position:absolute;top:-10px;left:-10px;background:var(--blue-rh2);border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;}
+.num{color:#fff;font-size:13px;font-weight:700;}
+.seq-icon{width:38px;height:38px;stroke:var(--blue-rh2);fill:none;stroke-width:1.8;}
+.heading-sequence{font-family:'Manrope',sans-serif;font-weight:700;font-size:.95rem;color:var(--heading);margin-bottom:8px;max-width:200px;}
+.paragraph-sequence{font-family:'Lato',sans-serif;font-size:.875rem;color:rgba(12,29,55,.6);line-height:1.7;max-width:200px;}
+.arrow-conn{display:flex;align-items:center;padding-top:35px;color:rgba(12,29,55,.2);}
+.arrow-conn svg{width:30px;height:22px;}
+
+/* LIBRARY */
+.grid-2-col{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;width:100%;}
+.block-right{padding-left:20px;}
+.block-check{display:flex;gap:14px;align-items:flex-start;margin-bottom:14px;}
+.check-icon{width:22px;height:22px;flex-shrink:0;background:var(--accent-bg);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-top:2px;}
+.check-icon svg{width:12px;height:12px;stroke:var(--blue-rh2);fill:none;stroke-width:2.5;}
+.heading-check{font-family:'Manrope',sans-serif;font-weight:600;font-size:.92rem;color:var(--heading);margin:0;line-height:1.4;}
+.fw-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.fw-card{background:#fff;border-radius:14px;padding:16px 18px;box-shadow:0 8px 30px -5px var(--shadow);border:1px solid rgba(12,29,55,.06);}
+.fw-name{font-family:'Manrope',sans-serif;font-weight:800;font-size:.85rem;color:var(--heading);margin-bottom:3px;}
+.fw-type{font-size:.7rem;color:rgba(12,29,55,.5);}
+.fw-badge{display:inline-block;margin-top:7px;background:var(--accent-bg);color:var(--blue-rh2);font-size:.65rem;font-weight:700;padding:3px 8px;border-radius:50px;}
+
+/* TESTIMONIALS */
+.grid-3-col{display:grid;grid-template-columns:1fr 2fr;gap:30px;align-items:start;width:100%;}
+.block-left{padding-top:10px;}
+.t-list{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.testimonial{background:var(--heading);border-radius:24px;padding:28px 34px;width:100%;}
+.paragraph-testimonial{font-family:'Lato',sans-serif;font-size:.9rem;line-height:1.75;color:#fff;margin-bottom:18px;font-style:italic;}
+.client{display:flex;align-items:center;gap:12px;}
+.client-avatar{width:38px;height:38px;border-radius:50%;object-fit:cover;flex-shrink:0;}
+.client-avatar-ph{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-family:'Manrope',sans-serif;font-weight:800;font-size:.78rem;color:#fff;flex-shrink:0;}
+.name{font-family:'Manrope',sans-serif;font-weight:700;font-size:.85rem;color:#fff;}
+.info{font-size:.76rem;color:rgba(255,255,255,.5);}
+
+/* PRICING */
+.grid-pricing{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;width:100%;margin-top:16px;}
+.plan{background:#fff;border-radius:24px;padding:36px 32px;box-shadow:0 25px 60px -10px rgba(12,29,55,.1);border:1px solid rgba(12,29,55,.07);display:flex;flex-direction:column;}
+.plan.featured{border:2px solid var(--blue-rh2);position:relative;}
+.popular-label{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--blue-rh2);color:#fff;font-size:.7rem;font-weight:800;padding:4px 16px;border-radius:50px;white-space:nowrap;font-family:'DM Sans',sans-serif;}
+.heading-plan{font-family:'Manrope',sans-serif;font-weight:800;font-size:1rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;}
+.heading-plan.green{color:var(--green);}
+.heading-plan.blue{color:var(--blue-rh2);}
+.heading-plan.navy{color:var(--heading);}
+.price-block{display:flex;align-items:flex-start;gap:4px;margin-bottom:14px;}
+.price-info{font-family:'Manrope',sans-serif;font-weight:700;font-size:1.1rem;color:var(--heading);padding-top:4px;}
+.price{font-family:'Manrope',sans-serif;font-weight:800;font-size:3rem;line-height:1;color:var(--heading);letter-spacing:-2px;}
+.paragraph-plan{font-family:'Lato',sans-serif;font-size:.875rem;color:rgba(12,29,55,.6);line-height:1.65;margin-bottom:20px;min-height:52px;}
+.grid-check-plan{display:flex;flex-direction:column;gap:10px;margin-bottom:28px;flex:1;}
+.check-block-plan{display:flex;align-items:flex-start;gap:10px;}
+.check-plan{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.check-plan.green{background:rgba(39,174,96,.12);}
+.check-plan.blue{background:var(--accent-bg);}
+.check-plan.navy{background:rgba(12,29,55,.08);}
+.check-plan svg{width:11px;height:11px;stroke-width:2.5;fill:none;}
+.check-plan.green svg{stroke:var(--green);}
+.check-plan.blue svg{stroke:var(--blue-rh2);}
+.check-plan.navy svg{stroke:var(--heading);}
+.text-check-plan{font-family:'Lato',sans-serif;font-size:.875rem;color:rgba(12,29,55,.75);line-height:1.5;}
+
+/* SERVICES */
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;width:100%;margin-top:20px;}
+.service-card{background:#fff;border-radius:20px;padding:32px 28px;box-shadow:0 20px 50px -10px var(--shadow);border:1px solid rgba(12,29,55,.06);}
+.service-heading{font-family:'Manrope',sans-serif;font-weight:800;font-size:1.05rem;margin-bottom:20px;}
+.service-heading.green{color:var(--green);}
+.service-heading.blue{color:var(--blue-rh2);}
+.service-heading.navy{color:var(--heading);}
+.service-list{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.service-list li{display:flex;align-items:flex-start;gap:10px;font-family:'Lato',sans-serif;font-size:.875rem;color:rgba(12,29,55,.75);line-height:1.5;}
+.svc-dot{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.svc-dot svg{width:10px;height:10px;stroke-width:2.5;fill:none;}
+.svc-dot.green{background:rgba(39,174,96,.12);}  .svc-dot.green svg{stroke:var(--green);}
+.svc-dot.blue{background:var(--accent-bg);}  .svc-dot.blue svg{stroke:var(--blue-rh2);}
+.svc-dot.navy{background:rgba(12,29,55,.08);}  .svc-dot.navy svg{stroke:var(--heading);}
+
+/* FAQ */
+.faq-list{width:100%;max-width:800px;display:flex;flex-direction:column;gap:12px;margin-top:16px;}
+.faq-item{background:var(--heading);border-radius:14px;overflow:hidden;}
+.faq-header{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;cursor:pointer;gap:16px;}
+.faq-q{font-family:'Manrope',sans-serif;font-weight:600;font-size:.95rem;color:#fff;line-height:1.4;}
+.faq-arrow{width:20px;height:20px;stroke:#fff;fill:none;stroke-width:2;flex-shrink:0;transition:transform .25s;}
+.faq-arrow.open{transform:rotate(180deg);}
+.faq-body{padding:0 24px;max-height:0;overflow:hidden;transition:max-height .3s ease,padding .3s;}
+.faq-body.open{max-height:300px;padding:0 24px 20px;}
+.faq-body p{font-family:'Lato',sans-serif;font-size:.9rem;color:rgba(255,255,255,.7);line-height:1.75;}
+.faq-body a{color:var(--blue-rh);text-decoration:underline;}
+
+/* BANNER */
+.grid-banner{display:grid;grid-template-columns:1fr 1fr;background:var(--heading);border-radius:24px;overflow:hidden;width:100%;}
+.text-banner{padding:60px;}
+.banner-visual{background:rgba(255,255,255,.04);min-height:240px;display:flex;align-items:center;justify-content:center;padding:30px;}
+.banner-code{background:rgba(0,0,0,.3);border-radius:12px;padding:20px 24px;font-family:'Courier New',monospace;font-size:.72rem;color:rgba(255,255,255,.7);line-height:1.9;width:100%;border:1px solid rgba(255,255,255,.08);}
+.cg{color:#0ab368;} .cb{color:#00bcee;} .co{color:#ff9a3c;}
+.form-banner{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px;}
+.text-field-white{flex:1;min-width:175px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:50px;padding:13px 20px;font-family:'DM Sans',sans-serif;font-size:.9rem;color:#fff;outline:none;}
+.text-field-white::placeholder{color:rgba(255,255,255,.4);}
+.text-field-white:focus{background:rgba(255,255,255,.17);}
+.submit-btn-white{background:#fff;color:var(--heading);border:none;border-radius:50px;padding:13px 26px;font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;white-space:nowrap;transition:opacity .15s;}
+.submit-btn-white:hover{opacity:.88;}
+.success-msg{color:#fff;font-size:.9rem;margin-top:12px;display:none;}
+
+/* FOOTER */
+.section-footer{display:flex;flex-direction:column;justify-content:center;align-items:center;padding:85px 30px 58px;}
+.grid-footer{display:grid;grid-template-columns:2fr 1fr 1fr;gap:40px;width:100%;max-width:1200px;}
+.paragraph-footer{font-family:'Lato',sans-serif;font-size:.875rem;color:rgba(12,29,55,.5);line-height:1.8;}
+.paragraph-footer a{color:rgba(12,29,55,.5);transition:color .15s;}
+.paragraph-footer a:hover{color:var(--blue-rh2);}
+.heading-footer{opacity:.4;color:var(--heading);font-family:'Manrope',sans-serif;font-weight:700;font-size:.78rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:18px;}
+.link-footer{display:block;color:rgba(12,29,55,.6);font-size:.9rem;font-weight:500;margin-bottom:10px;transition:color .15s;}
+.link-footer:hover{color:var(--blue-rh2);}
+
+/* RESPONSIVE */
+@media(max-width:991px){
+  .grid-content{grid-template-columns:1fr;padding:60px 30px;}
+  .block-sticky{grid-column:1;padding-right:0;}
+  .grid-app-screen{grid-column:1;padding:0;grid-template-columns:1fr 1fr;}
+  .grid-feature{grid-template-columns:1fr 1fr;}
+  .grid-3-col{grid-template-columns:1fr;}
+  .t-list{grid-template-columns:1fr;}
+  .block-left{text-align:center;display:flex;flex-direction:column;align-items:center;}
+  .grid-banner{grid-template-columns:1fr;}
+  .banner-visual{display:none;}
+  .grid-footer{grid-template-columns:1fr 1fr;}
+  .grid-pricing{grid-template-columns:1fr;}
+  .services-grid{grid-template-columns:1fr;}
+  .grid-2-col{grid-template-columns:1fr;}
+  .grid-3-col{grid-template-columns:1fr;}
+}
+@media(max-width:767px){
+  .section-hero{padding:150px 20px 80px;}
+  .grid-sequence{grid-template-columns:1fr;}
+  .arrow-conn{display:none;}
+  .grid-feature{grid-template-columns:1fr 1fr;gap:16px;}
+  .hero-cards-row{gap:10px;}
+  .hero-card{min-width:140px;}
+  .grid-pricing{grid-template-columns:1fr;}
+  .services-grid{grid-template-columns:1fr;}
+  .text-banner{padding:40px 24px;}
+  .fw-grid{grid-template-columns:1fr;}
+}
+@media(max-width:479px){
+  .grid-feature{grid-template-columns:1fr;}
+  .nav-menu{display:none;}
+  .grid-footer{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<div class="section-navbar">
+  <div class="navbar">
+    <div class="grid-navbar">
+      <div class="nav"><a href="#" class="logo-text">Risk<span>Hero</span></a></div>
+      <div class="nav">
+        <nav class="nav-menu">
+          <a href="#" class="nav-link active">Home</a>
+          <a href="#features" class="nav-link">Features</a>
+          <a href="#pricing" class="nav-link">Pricing</a>
+          <a href="#services" class="nav-link">Services</a>
+          <a href="#contact" class="nav-link">Contact</a>
+          <a href="#" class="nav-link">About</a>
+        </nav>
+      </div>
+      <div class="nav right">
+        <div class="extra-nav-menu">
+          <a href="https://app.riskhero.com/login" class="nav-link">Log in</a>
+          <a href="https://app.riskhero.com/signup" class="nav-button">Sign up</a>
+        </div>
+      </div>
+    </div>
+    <div class="navbar-bg"></div>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="section-hero">
+  <div class="block-hero">
+    <div class="eyebrow"><div class="eyebrow-dot"></div>AI Governance &amp; Assurance Platform</div>
+    <h1 class="heading-hero">AI Risk Management just got <span class="text-accent">smarter.</span></h1>
+    <p class="paragraph-hero">As AI agents reshape how organizations operate, RiskHero gives you the governance layer to assess, track, and prove your AI is working as designed — and meeting every regulatory requirement across North America.</p>
+    <div class="hero-actions">
+      <a href="https://app.riskhero.com/signup" class="button">Get Started</a>
+      <a href="#features" class="button outline">See How It Works</a>
+    </div>
+  </div>
+  <div class="hero-cards-row">
+    <div class="hero-card">
+      <div class="hero-card-label">AI Risk Score</div>
+      <div class="hero-card-value blue">72 / 100</div>
+      <div class="hero-card-sub">↑ 8pts from last assessment</div>
+      <div class="hero-card-bar"><div class="hero-card-bar-fill" style="width:72%"></div></div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-card-label">Agents Assessed</div>
+      <div class="hero-card-value">24</div>
+      <div class="hero-card-sub">Across 6 business units</div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-card-label">Compliance</div>
+      <div class="hero-card-value green">91%</div>
+      <div class="hero-card-sub">NIST AI RMF · AIDA · EU AI Act</div>
+    </div>
+    <div class="ai-chip-card">
+      <span class="ai-chip-label">AI</span>
+      <span class="ai-chip-text">3 agents flagged for drift — corrective action plans auto-generated and ready to assign.</span>
+    </div>
+  </div>
+  <div class="partner-strip">
+    <span>Frameworks covered</span>
+    <span class="partner-badge">NIST AI RMF 1.0</span>
+    <span class="partner-badge">AIDA Canada</span>
+    <span class="partner-badge">EU AI Act</span>
+    <span class="partner-badge">ISO 42001</span>
+    <span class="partner-badge">OECD AI Principles</span>
+  </div>
+</div>
+
+<!-- 4 PILLARS -->
+<div class="section" id="features">
+  <div class="content">
+    <div class="block-center">
+      <h2 class="heading">Every AI deployment needs the right governance 🚀</h2>
+      <p class="paragraph">A feature-rich platform that connects AI oversight, regulatory compliance, and risk intelligence for organizations operating in the agentic era.</p>
+    </div>
+    <div class="grid-feature">
+      <div class="feature">
+        <div class="icon-feature-bg"><svg class="icon-feat" viewBox="0 0 24 24"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/></svg></div>
+        <h5 class="heading-feature">Assess AI Risk</h5>
+        <p class="paragraph-feature">Evaluate AI agents and models against your risk tolerance and regulatory obligations — automatically.</p>
+      </div>
+      <div class="feature">
+        <div class="icon-feature-bg"><svg class="icon-feat" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg></div>
+        <h5 class="heading-feature">Prove Regulatory Compliance</h5>
+        <p class="paragraph-feature">Map AI deployments to NIST AI RMF, AIDA, EU AI Act, and ISO 42001 — audit-ready documentation always on hand.</p>
+      </div>
+      <div class="feature">
+        <div class="icon-feature-bg"><svg class="icon-feat" viewBox="0 0 24 24"><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg></div>
+        <h5 class="heading-feature">Monitor Agent Behavior</h5>
+        <p class="paragraph-feature">Track whether AI is operating as designed — surface drift, detect scope creep, maintain a live view of your agent landscape.</p>
+      </div>
+      <div class="feature">
+        <div class="icon-feature-bg"><svg class="icon-feat" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg></div>
+        <h5 class="heading-feature">Drive Corrective Action</h5>
+        <p class="paragraph-feature">When gaps are found, AI auto-generates remediation plans — assign owners, set deadlines, track to resolution.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STICKY FULL -->
+<div class="section-full">
+  <div class="grid-content">
+    <div class="block-sticky">
+      <div class="section-tag">AI Assurance</div>
+      <h2 class="heading">It's not <span class="text-accent">risky business</span> when you can prove it.</h2>
+      <p class="paragraph">When an AI agent goes off-script — processing data it shouldn't, making decisions outside its scope, or drifting from its declared purpose — the liability is yours. RiskHero gives your organization the evidence layer to show regulators, auditors, and your board that AI is under control.</p>
+      <div class="reg-badges">
+        <span class="reg-badge">NIST AI RMF 1.0</span>
+        <span class="reg-badge">Canada AIDA</span>
+        <span class="reg-badge">ISED Voluntary Code</span>
+        <span class="reg-badge">EU AI Act</span>
+        <span class="reg-badge">ISO/IEC 42001</span>
+        <span class="reg-badge">OECD AI Principles</span>
+      </div>
+      <a href="https://app.riskhero.com/signup" class="button">Start Assessing</a>
+    </div>
+    <div class="grid-app-screen">
+      <div class="app-card">
+        <div class="app-card-header"><div class="app-card-title">AI Risk Register</div><div class="sdot o"></div></div>
+        <div class="mini-bar-row"><div class="mini-bar-label"><span>Scope Creep</span><span>High</span></div><div class="mini-bar"><div class="mini-bar-fill" style="width:82%;background:var(--orange)"></div></div></div>
+        <div class="mini-bar-row"><div class="mini-bar-label"><span>Data Exposure</span><span>Medium</span></div><div class="mini-bar"><div class="mini-bar-fill" style="width:54%;background:var(--blue-rh2)"></div></div></div>
+        <div class="mini-bar-row"><div class="mini-bar-label"><span>Bias Risk</span><span>Low</span></div><div class="mini-bar"><div class="mini-bar-fill" style="width:28%;background:#0ab368"></div></div></div>
+      </div>
+      <div class="app-card">
+        <div class="app-card-header"><div class="app-card-title">Compliance Score</div><div class="sdot g"></div></div>
+        <div class="score-big">87%</div>
+        <div class="score-lbl">NIST AI RMF alignment</div>
+        <div style="margin-top:8px;font-size:.7rem;color:rgba(12,29,55,.4);font-weight:600;">↑ 12% this quarter</div>
+      </div>
+      <div class="app-card full">
+        <div class="app-card-header"><div class="app-card-title">Recent Findings</div><span style="font-size:.7rem;color:var(--blue-rh2);font-weight:700;">AI Auto-Detected</span></div>
+        <div class="finding-row"><span class="fsev h">High</span><span>Agent-7 exceeded declared data access scope</span></div>
+        <div class="finding-row"><span class="fsev m">Med</span><span>Governance policy not mapped to EU AI Act Art. 9</span></div>
+        <div class="finding-row"><span class="fsev l">Low</span><span>Human oversight documentation incomplete</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div class="section is-light">
+  <div class="content">
+    <div class="block-center"><h2 class="heading">How it works</h2></div>
+    <div class="grid-sequence">
+      <div class="sequence">
+        <div class="icon-seq-bg"><div class="num-bg"><div class="num">1</div></div><svg class="seq-icon" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg></div>
+        <h4 class="heading-sequence">Inventory and assess your AI</h4>
+        <p class="paragraph-sequence">Catalog every AI agent in use. Launch assessments against leading governance frameworks — or let AI scan your documents automatically.</p>
+      </div>
+      <div class="arrow-conn"><svg viewBox="0 0 30 22" fill="none"><path d="M0 11h26M18 3l8 8-8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="sequence">
+        <div class="icon-seq-bg"><div class="num-bg"><div class="num">2</div></div><svg class="seq-icon" viewBox="0 0 24 24"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg></div>
+        <h4 class="heading-sequence">Surface gaps and create issues</h4>
+        <p class="paragraph-sequence">AI flags risks and compliance gaps. Auto-generate corrective action plans and assign them to owners with deadlines.</p>
+      </div>
+      <div class="arrow-conn"><svg viewBox="0 0 30 22" fill="none"><path d="M0 11h26M18 3l8 8-8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="sequence">
+        <div class="icon-seq-bg"><div class="num-bg"><div class="num">3</div></div><svg class="seq-icon" viewBox="0 0 24 24"><path d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg></div>
+        <h4 class="heading-sequence">Report to leadership and regulators</h4>
+        <p class="paragraph-sequence">One-click board-ready reports showing your AI risk posture, remediation progress, and regulatory compliance — audit-ready.</p>
+      </div>
+    </div>
+    <a href="https://app.riskhero.com/signup" class="button" style="margin-top:48px">Get Started</a>
+  </div>
+</div>
+
+<!-- LIBRARY -->
+<div class="section">
+  <div class="content">
+    <div class="grid-2-col">
+      <div class="fw-grid">
+        <div class="fw-card"><div class="fw-name">NIST AI RMF 1.0</div><div class="fw-type">AI Risk Framework</div><div class="fw-badge">US Standard</div></div>
+        <div class="fw-card"><div class="fw-name">Canada AIDA</div><div class="fw-type">Proposed Regulation</div><div class="fw-badge">North America</div></div>
+        <div class="fw-card"><div class="fw-name">EU AI Act</div><div class="fw-type">Binding Regulation</div><div class="fw-badge">Global Exposure</div></div>
+        <div class="fw-card"><div class="fw-name">ISO/IEC 42001</div><div class="fw-type">AI Management System</div><div class="fw-badge">International</div></div>
+        <div class="fw-card"><div class="fw-name">OECD AI Principles</div><div class="fw-type">Policy Framework</div><div class="fw-badge">Intergovernmental</div></div>
+        <div class="fw-card"><div class="fw-name">ISED Voluntary Code</div><div class="fw-type">Canadian AI Code</div><div class="fw-badge">Canada</div></div>
+      </div>
+      <div class="block-right">
+        <div class="section-tag">AI Governance Library</div>
+        <h2 class="heading">Enhance your program with our <span class="text-accent">library of assets</span></h2>
+        <p class="paragraph">Leverage our growing library of AI governance frameworks, assessment templates, and compliance checklists — curated for organizations deploying AI across North America and beyond.</p>
+        <div class="block-check"><div class="check-icon"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5"/></svg></div><h6 class="heading-check">Pre-built AI risk assessments mapped to NIST, AIDA &amp; ISO 42001</h6></div>
+        <div class="block-check"><div class="check-icon"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5"/></svg></div><h6 class="heading-check">Complements Mnemom and other AI trust infrastructure providers</h6></div>
+        <div class="block-check"><div class="check-icon"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5"/></svg></div><h6 class="heading-check">Regulatory updates tracked — your program stays current automatically</h6></div>
+        <div class="block-check"><div class="check-icon"><svg viewBox="0 0 12 12"><path d="M2 6l3 3 5-5"/></svg></div><h6 class="heading-check">Empower risk, legal, and compliance teams — not just AI specialists</h6></div>
+        <a href="https://app.riskhero.com/signup" class="button" style="margin-top:8px">Explore the Library</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TESTIMONIALS -->
+<div class="section is-testimonials">
+  <div class="content">
+    <div class="grid-3-col">
+      <div class="block-left">
+        <h2 class="heading">ERM reimagined for the AI era</h2>
+        <p class="paragraph">Hear what people have to say about us.</p>
+        <a href="https://app.riskhero.com/signup" class="button">Get Started</a>
+      </div>
+      <div class="t-list">
+        <div class="testimonial"><p class="paragraph-testimonial">It is designed to function how risk management and controls should work to provide value to organizations. I can tell there is fundamental understanding of organizational risk management behind the scenes, not just checking compliance boxes.</p><div class="client"><img src="https://cdn.prod.website-files.com/611b556992e95b29077a3e5b/61409ebc39ddac1edf1c0c5a_dale%20crump%20headshot.jpg" alt="Dale Crump" class="client-avatar"><div><div class="name">Dale Crump</div><div class="info">Principal &amp; Owner, AssurancePoint, LLC</div></div></div></div>
+        <div class="testimonial"><p class="paragraph-testimonial">RiskHero functionality is simple and easy to follow. The platform helps connect the dots for risk professionals as well as business operators, a winning combination.</p><div class="client"><div class="client-avatar-ph">EB</div><div><div class="name">Ermias Bekele</div><div class="info">IT Risk Manager</div></div></div></div>
+        <div class="testimonial"><p class="paragraph-testimonial">RiskHero is intuitive and very easy to use. It's clear that a lot of thought went into the design of the application.</p><div class="client"><div class="client-avatar-ph">GH</div><div><div class="name">Garth Humphreys</div><div class="info">Application Security Engineer</div></div></div></div>
+        <div class="testimonial"><p class="paragraph-testimonial">It's refreshing to see a tool capable of showing an enterprise view of risk as opposed to a view specific to privacy, security or third party risk — all at a very compelling price point.</p><div class="client"><img src="https://cdn.prod.website-files.com/611b556992e95b29077a3e5b/61409dac195741e5e7e53a13_hanson%20wong%20headshot.jpg" alt="Hanson Wong" class="client-avatar"><div><div class="name">Hanson Wong</div><div class="info">Asst. Data Protection Officer, Facebook</div></div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PRICING -->
+<div class="section is-light" id="pricing">
+  <div class="content">
+    <div class="block-center">
+      <h2 class="heading">Pricing built for businesses of all sizes</h2>
+      <p class="paragraph">All plans start with a 30 day free trial. No inherent risks with us – until you add them. 😉</p>
+    </div>
+    <div class="grid-pricing">
+      <!-- Starter -->
+      <div class="plan">
+        <h5 class="heading-plan green">Starter</h5>
+        <div class="price-block"><div class="price-info">$</div><div class="price">199</div><div class="price-info">/mo</div></div>
+        <p class="paragraph-plan">Access for a single user to all modules, including:</p>
+        <div class="grid-check-plan">
+          <div class="check-block-plan"><div class="check-plan green"><svg viewBox="0 0 11 11"><path d="M1.5 5.5l3 3 5-5"/></svg></div><div class="text-check-plan">Access to RiskHero Library of assets</div></div>
+          <div class="check-block-plan"><div class="check-plan green"><svg viewBox="0 0 11 11"><path d="M1.5 5.5l3 3 5-5"/></svg></div><div class="text-check-plan">Unlimited Assessments</div></div>
+          <div class="check-block-plan"><div class="check-plan green"><svg viewBox="0 0 11 11"><path d="M1.5 5.5l3 3 5-5"/></svg></div><div class="text-check-plan">Customize Risk Catalogs</div></div>
+          <div class="check-block-plan"><div class="check-plan green"><svg viewBox="0 0 11 11"><path d="M1.5 5.5l3 3 5-5"/></svg></div><div class="text-check-plan">Customize Control Frameworks</div></div>
+          <div class="check-block-plan"><div class="check-plan green"><svg viewBox="0 0 11 11"><path d="M1.5 5.5l3 3 5-5"/></svg></div><div class="text-check-plan">Capture risks in Risk Register</div></div>
+          <div class="check-block-plan"><div class="check-plan green"><svg viewBox="0 0 11 11"><path d="M1.5 5.5l3 3 5-5"/></svg></div><div class="text-check-plan">Track control effectiveness — Control Register</div></div>
+          <div class="check-block-plan"><div class="check-plan green"><svg viewBox="0 0 11 11"><path d="M1.5 5.5l3 3 5-5"/></svg></div><div class="text-check-plan">Visualize risks and controls in Reporting</div></div>
+          <div class="check-block-plan"><div class="check-plan green"><svg viewBox="0 0 11 11"><path d="M1.5 5.5l3 3 5-5"/></svg></div><div class="text-check-plan">Create Issues to address gaps</div></div>
+        </div>
+        <a href="https://app.riskhero.com/signup" class="button-small outline">Get Started</a>
+      </div>
+      <!-- Teams -->
+      <div class="plan featured">
+        <div class="popular-label">Most Popular</div>
+        <h5 class="heading-plan blue">Teams</h5>
+        <div class="price-block"><div class="price-info">$</div><div class="price">999</div><div class="price-info">/mo</div></div>
+        <p class="paragraph-plan">Access for five users to all modules, additional user $199. Everything in Starter, plus:</p>
+        <div class="grid-check-plan">
+          <div class="check-block-plan"><div class="check-plan blue"><svg viewBox="0 0 11 11"><path d="M1.5 5.5l3 3 5-5"/></svg></div><div class="text-check-plan">Team access to the platform</div></div>
+          <div class="check-block-plan"><div class="check-plan blue"><svg viewBox="0 0 11 11"><path d="M1.5 5.5l3 3 5-5"/></svg></div><div class="text-check-plan">Assign and share assessments with internal and external responders</div></div>
+          <div class="check-block-plan"><div class="check-plan blue"><svg viewBox="0 0 11 11"><path d="M1.5 5.5l3 3 5-5"/></svg></div><div class="text-check-plan">Track team activity and reporting</div></div>
+          <div class="check-block-plan"><div class="check-plan blue"><svg viewBox="0 0 11 11"><path d="M1.5 5.5l3 3 5-5"/></svg></div><div class="text-check-plan">Assign collaborators and viewers to assessments</div></div>
+          <div class="check-block-plan"><div class="check-plan blue"><svg viewBox="0 0 11 11"><path d="M1.5 5.5l3 3 5-5"/></svg></div><div class="text-check-plan">Assign remediation owners and track issues to completion</div></div>
+        </div>
+        <a href="https://app.riskhero.com/signup" class="button-small outline">Get Started</a>
+      </div>
+      <!-- Enterprise -->
+      <div class="plan">
+        <h5 class="heading-plan navy">Agency / Enterprise</h5>
+        <div class="price-block"><div class="price-info">$</div><div class="price" style="font-size:2rem;letter-spacing:-1px;padding-top:6px;">Custom</div></div>
+        <p class="paragraph-plan">Everything in Teams, plus:</p>
+        <div class="grid-check-plan">
+          <div class="check-block-plan"><div class="check-plan navy"><svg viewBox="0 0 11 11"><path d="M1.5 5.5l3 3 5-5"/></svg></div><div class="text-check-plan">Manage multiple risk assessing groups</div></div>
+          <div class="check-block-plan"><div class="check-plan navy"><svg viewBox="0 0 11 11"><path d="M1.5 5.5l3 3 5-5"/></svg></div><div class="text-check-plan">Data Migration Services</div></div>
+          <div class="check-block-plan"><div class="check-plan navy"><svg viewBox="0 0 11 11"><path d="M1.5 5.5l3 3 5-5"/></svg></div><div class="text-check-plan">Customized modules for enterprise processes</div></div>
+          <div class="check-block-plan"><div class="check-plan navy"><svg viewBox="0 0 11 11"><path d="M1.5 5.5l3 3 5-5"/></svg></div><div class="text-check-plan">Active Directory integration</div></div>
+          <div class="check-block-plan"><div class="check-plan navy"><svg viewBox="0 0 11 11"><path d="M1.5 5.5l3 3 5-5"/></svg></div><div class="text-check-plan">Multifactor Authentication</div></div>
+          <div class="check-block-plan"><div class="check-plan navy"><svg viewBox="0 0 11 11"><path d="M1.5 5.5l3 3 5-5"/></svg></div><div class="text-check-plan">Dedicated customer support</div></div>
+          <div class="check-block-plan"><div class="check-plan navy"><svg viewBox="0 0 11 11"><path d="M1.5 5.5l3 3 5-5"/></svg></div><div class="text-check-plan">Develop custom risk assessments</div></div>
+        </div>
+        <a href="mailto:contact@riskhero.com" class="button-small outline">Contact Us</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<div class="section" id="services">
+  <div class="content">
+    <div class="block-center">
+      <h2 class="heading">Professional Services</h2>
+      <p class="paragraph">Safeguarding Tomorrow's Success: Unleash the Power of Our Tailored Risk Management Solutions.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-heading green">Information Security</div>
+        <ul class="service-list">
+          <li><div class="svc-dot green"><svg viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>Virtual CISO Services</li>
+          <li><div class="svc-dot green"><svg viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>Penetration Testing</li>
+          <li><div class="svc-dot green"><svg viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>Security Audits &amp; Assessments</li>
+          <li><div class="svc-dot green"><svg viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>Security Policy Review &amp; Consulting</li>
+          <li><div class="svc-dot green"><svg viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>SOC2 Readiness</li>
+          <li><div class="svc-dot green"><svg viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>Table-Top Exercises</li>
+          <li><div class="svc-dot green"><svg viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>Vendor Management</li>
+        </ul>
+      </div>
+      <div class="service-card">
+        <div class="service-heading blue">Data Privacy</div>
+        <ul class="service-list">
+          <li><div class="svc-dot blue"><svg viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>Virtual DPO Services</li>
+          <li><div class="svc-dot blue"><svg viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>Privacy Assessment &amp; Compliance</li>
+          <li><div class="svc-dot blue"><svg viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>Regulatory Compliance Assessment</li>
+          <li><div class="svc-dot blue"><svg viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>Privacy Impact Assessment</li>
+          <li><div class="svc-dot blue"><svg viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>Employee Training &amp; Awareness</li>
+          <li><div class="svc-dot blue"><svg viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>Data Mapping &amp; Inventory</li>
+          <li><div class="svc-dot blue"><svg viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>Records of Processing Activities (ROPA)</li>
+        </ul>
+      </div>
+      <div class="service-card">
+        <div class="service-heading navy">Risk Management</div>
+        <ul class="service-list">
+          <li><div class="svc-dot navy"><svg viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>Virtual CRO Services</li>
+          <li><div class="svc-dot navy"><svg viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>Risk Register Development</li>
+          <li><div class="svc-dot navy"><svg viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>Enterprise Risk Assessment</li>
+          <li><div class="svc-dot navy"><svg viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>Risk Assessments and Analysis</li>
+          <li><div class="svc-dot navy"><svg viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>Crisis Management and Response</li>
+          <li><div class="svc-dot navy"><svg viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>Third Party Risk Management</li>
+          <li><div class="svc-dot navy"><svg viewBox="0 0 10 10"><path d="M1.5 5l2.5 2.5 4.5-4.5"/></svg></div>Risk Mitigation Planning</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<div class="section is-light">
+  <div class="content">
+    <div class="block-center"><h2 class="heading">Frequently asked questions</h2></div>
+    <div class="faq-list">
+      <div class="faq-item"><div class="faq-header" onclick="toggleFaq(this)"><div class="faq-q">How does your library of assets help my risk management program?</div><svg class="faq-arrow" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div><div class="faq-body"><p>Imagine having access to all commonly used and industry-recognized control frameworks, risk catalogs, and risk assessments at your fingertips. No more wasted cycles searching for risk management content — leave the heavy lifting to us. Harness the power of the RiskHero library to save time and work faster.</p></div></div>
+      <div class="faq-item"><div class="faq-header" onclick="toggleFaq(this)"><div class="faq-q">We have our own risk ratings and definitions — can RiskHero use our custom definitions?</div><svg class="faq-arrow" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div><div class="faq-body"><p>Users can change risk ratings and definitions by category within the platform. This allows you to tailor RiskHero to your company's internal framework.</p></div></div>
+      <div class="faq-item"><div class="faq-header" onclick="toggleFaq(this)"><div class="faq-q">Can I bring existing historical assessments, control frameworks, and risk registers into RiskHero?</div><svg class="faq-arrow" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div><div class="faq-body"><p>RiskHero professional services can help bring all of this information into the platform for your company's account. Reach out to our <a href="mailto:support@riskhero.com">support team</a> to begin the process.</p></div></div>
+      <div class="faq-item"><div class="faq-header" onclick="toggleFaq(this)"><div class="faq-q">How many people can respond to an assessment at once?</div><svg class="faq-arrow" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div><div class="faq-body"><p>Assessments can be routed to multiple people at once — inside or outside your organization. There is no limit to how many people can respond or how many times you ask them to respond. The assessment owner sees all responses come in real time through one seamless platform experience.</p></div></div>
+      <div class="faq-item"><div class="faq-header" onclick="toggleFaq(this)"><div class="faq-q">Can I change my plan after signing up?</div><svg class="faq-arrow" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div><div class="faq-body"><p>We allow users to upgrade and cancel at any time. No questions asked.</p></div></div>
+      <div class="faq-item"><div class="faq-header" onclick="toggleFaq(this)"><div class="faq-q">Do you offer integration with other software solutions?</div><svg class="faq-arrow" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div><div class="faq-body"><p>RiskHero is working with key partners to offer API integrations with commonly used SaaS solutions to complement your Risk Management program. Join our mailing list below for updates.</p></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- BANNER / CONTACT -->
+<div class="section" id="contact">
+  <div class="content">
+    <div class="grid-banner">
+      <div class="text-banner">
+        <h2 class="heading white">Stay ahead of the curve with RiskHero</h2>
+        <p class="paragraph white">Stay connected for updates as we continue our mission to reimagine risk management for the AI era.</p>
+        <form class="form-banner" onsubmit="handleSub(event)">
+          <input class="text-field-white" type="email" placeholder="Your email" required>
+          <button type="submit" class="submit-btn-white">Join!</button>
+        </form>
+        <div class="success-msg" id="sub-success">Thank you! Your submission has been received!</div>
+      </div>
+      <div class="banner-visual">
+        <div class="banner-code">
+<span class="cg">✓</span> NIST AI RMF — <span class="cb">Govern</span> · Map · Measure · Manage<br>
+<span class="cg">✓</span> Canada AIDA — <span class="cb">High-Impact System</span> assessment complete<br>
+<span class="cg">✓</span> EU AI Act — <span class="cb">Art. 9</span> risk management documented<br>
+<span class="co">⚠</span> ISO 42001 — <span class="cb">Sec. 6.1</span> corrective action in progress<br>
+<span class="cg">✓</span> Agent-12 — aligned · score <span class="cb">94/100</span><br>
+<span class="co">⚠</span> Agent-7 — drift detected · CAP assigned
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="section-footer">
+  <div class="grid-footer">
+    <div>
+      <div class="logo-text" style="margin-bottom:16px">Risk<span>Hero</span></div>
+      <p class="paragraph-footer">Our office:<br>6234 Old Highway 5<br>Woodstock, GA 30188<br><br><a href="mailto:contact@riskhero.com">contact@riskhero.com</a><br><br>© 2026 Risk Hero, LLC. All rights reserved.&nbsp;<a href="#">Privacy Policy</a>.&nbsp;<a href="#">Terms &amp; Conditions</a>.&nbsp;<a href="https://checkered-polyester-cd7.notion.site/Security-at-RiskHero-8000c5624a614c2ba4990ccfbd9709aa" target="_blank">Security</a></p>
+    </div>
+    <div>
+      <div class="heading-footer">Quick Links</div>
+      <a href="#" class="link-footer">Company</a>
+      <a href="#features" class="link-footer">Features</a>
+      <a href="#pricing" class="link-footer">Pricing</a>
+      <a href="#services" class="link-footer">Services</a>
+      <a href="#contact" class="link-footer">Contact</a>
+    </div>
+    <div>
+      <div class="heading-footer">Social</div>
+      <a href="https://www.facebook.com/goriskhero/" target="_blank" class="link-footer">Facebook</a>
+      <a href="https://linkedin.com/company/riskhero/" target="_blank" class="link-footer">LinkedIn</a>
+      <a href="https://twitter.com/goRiskHero" target="_blank" class="link-footer">Twitter</a>
+    </div>
+  </div>
+</div>
+
+<script>
+// Navbar scroll effect
+const navBg = document.querySelector('.navbar-bg');
+window.addEventListener('scroll', () => { navBg.style.opacity = window.scrollY > 20 ? '1' : '0'; });
+
+// FAQ accordion
+function toggleFaq(header) {
+  const body = header.nextElementSibling;
+  const arrow = header.querySelector('.faq-arrow');
+  const isOpen = body.classList.contains('open');
+  document.querySelectorAll('.faq-body.open').forEach(b => { b.classList.remove('open'); b.previousElementSibling.querySelector('.faq-arrow').classList.remove('open'); });
+  if (!isOpen) { body.classList.add('open'); arrow.classList.add('open'); }
+}
+
+// Email form
+function handleSub(e) {
+  e.preventDefault();
+  e.target.style.display = 'none';
+  document.getElementById('sub-success').style.display = 'block';
+}
+</script>
+</body>
+</html>

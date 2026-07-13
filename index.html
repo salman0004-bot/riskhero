@@ -251,36 +251,71 @@ footer { background: #fff; padding: 70px 40px 40px; display: flex; flex-directio
 .footer-bottom a { color: rgba(12,29,55,0.38); transition: color 0.15s; }
 .footer-bottom a:hover { color: var(--blue); }
 
+/* HAMBURGER */
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; background: none; border: none; }
+.hamburger span { display: block; width: 22px; height: 2px; background: var(--navy); border-radius: 2px; transition: all 0.25s; }
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.mobile-menu {
+  display: none; position: fixed; top: 68px; left: 0; right: 0; z-index: 199;
+  background: var(--light-blue); box-shadow: 0 8px 24px var(--shadow);
+  flex-direction: column; padding: 16px 20px 24px;
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a { color: var(--navy); font-size: 1rem; font-weight: 600; padding: 14px 0; border-bottom: 1px solid rgba(12,29,55,0.08); transition: color 0.15s; }
+.mobile-menu a:last-child { border-bottom: none; }
+.mobile-menu a:hover { color: var(--blue); }
+.mobile-menu .mobile-cta { margin-top: 12px; background: var(--navy); color: #fff !important; border-radius: 50px; padding: 14px; text-align: center; font-weight: 700; border-bottom: none !important; }
+.mobile-menu .mobile-cta:hover { background: var(--blue); }
+
 /* RESPONSIVE */
 @media(max-width:1024px){
-  .pillars{grid-template-columns:1fr 1fr;}
-  .split{grid-template-columns:1fr;}
-  .tgrid{grid-template-columns:1fr;}
-  .tlist{grid-template-columns:1fr;}
-  .contact-grid{grid-template-columns:1fr;}
-  .nl-bar{flex-direction:column;text-align:center;}
-  .nl-text p{max-width:100%;}
-  .nl-input{width:100%;}
+  .pillars { grid-template-columns: 1fr 1fr; }
+  .split { grid-template-columns: 1fr; }
+  .tgrid { grid-template-columns: 1fr; }
+  .tlist { grid-template-columns: 1fr 1fr; }
+  .contact-grid { grid-template-columns: 1fr; }
+  .nl-bar { flex-direction: column; text-align: center; }
+  .nl-text p { max-width: 100%; }
+  .nl-input { width: 100%; }
+  .nl-form { flex-direction: column; width: 100%; }
+  .nl-btn { width: 100%; }
 }
 @media(max-width:768px){
-  .nav-links{display:none;}
-  .hero{padding:130px 20px 70px;}
-  .lib-grid{grid-template-columns:1fr;}
-  .pgrid{grid-template-columns:1fr;}
-  .sgrid{grid-template-columns:1fr;}
-  .steps{grid-template-columns:1fr;}
-  .arrow{display:none;}
-  .form-row{grid-template-columns:1fr;}
-  .footer-grid{grid-template-columns:1fr 1fr;}
-  .mini-cards{grid-template-columns:1fr;}
-  .nl-form{flex-direction:column;}
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+  .nav-right { display: none; }
+  .hero { padding: 110px 20px 60px; }
+  .hero-cards { gap: 10px; }
+  .hcard { min-width: 140px; flex: 1; }
+  .ai-chip { max-width: 100%; width: 100%; }
+  .section { padding: 64px 20px; }
+  .lib-grid { grid-template-columns: 1fr; }
+  .fw-cards { grid-template-columns: 1fr 1fr; }
+  .pgrid { grid-template-columns: 1fr; }
+  .sgrid { grid-template-columns: 1fr; }
+  .steps { grid-template-columns: 1fr; gap: 32px; }
+  .arrow { display: none; }
+  .form-row { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .mini-cards { grid-template-columns: 1fr; }
+  .nl-section { padding: 60px 20px; }
+  .tlist { grid-template-columns: 1fr; }
+  .hero-btns { flex-direction: column; align-items: center; }
+  .hero-btns .btn { width: 100%; max-width: 320px; text-align: center; }
 }
 @media(max-width:480px){
-  .pillars{grid-template-columns:1fr;}
-  .tlist{grid-template-columns:1fr;}
-  .fw-cards{grid-template-columns:1fr;}
-  .nav-inner{padding:0 20px;}
-  .footer-grid{grid-template-columns:1fr;}
+  .pillars { grid-template-columns: 1fr; }
+  .tlist { grid-template-columns: 1fr; }
+  .fw-cards { grid-template-columns: 1fr; }
+  .nav-inner { padding: 0 16px; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .hero-cards { flex-direction: column; align-items: center; }
+  .hcard { width: 100%; max-width: 340px; min-width: unset; }
+  .ai-chip { max-width: 340px; }
+  .form-card { padding: 24px 18px; }
+  .section { padding: 56px 16px; }
 }
 </style>
 </head>
@@ -302,7 +337,21 @@ footer { background: #fff; padding: 70px 40px 40px; display: flex; flex-directio
       <a href="https://app.riskhero.com/" class="nav-login">Log in</a>
       <a href="https://app.riskhero.com/" class="nav-signup">Sign up</a>
     </div>
+    <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </div>
+</div>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#" onclick="closeMenu()">Home</a>
+  <a href="#features" onclick="closeMenu()">Features</a>
+  <a href="#pricing" onclick="closeMenu()">Pricing</a>
+  <a href="#services" onclick="closeMenu()">Services</a>
+  <a href="#contact" onclick="closeMenu()">Contact</a>
+  <a href="#about" onclick="closeMenu()">About</a>
+  <a href="https://app.riskhero.com/" class="mobile-cta">Log in / Sign up</a>
 </div>
 
 <!-- HERO -->
@@ -728,6 +777,26 @@ footer { background: #fff; padding: 70px 40px 40px; display: flex; flex-directio
 </footer>
 
 <script>
+function toggleMenu() {
+  const menu = document.getElementById('mobile-menu');
+  const btn = document.getElementById('hamburger');
+  menu.classList.toggle('open');
+  btn.classList.toggle('open');
+}
+function closeMenu() {
+  document.getElementById('mobile-menu').classList.remove('open');
+  document.getElementById('hamburger').classList.remove('open');
+}
+// Close menu when clicking outside
+document.addEventListener('click', function(e) {
+  const menu = document.getElementById('mobile-menu');
+  const btn = document.getElementById('hamburger');
+  if (!menu.contains(e.target) && !btn.contains(e.target)) {
+    menu.classList.remove('open');
+    btn.classList.remove('open');
+  }
+});
+
 function toggleFaq(hdr) {
   const body = hdr.nextElementSibling;
   const arr = hdr.querySelector('.faq-arr');
